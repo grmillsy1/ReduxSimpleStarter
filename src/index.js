@@ -1,14 +1,28 @@
-//create new component. This should produce some html
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import SearchBar from './components/search_bar';
+import YTSearch from 'youtube-api-search';
 
-//Take component's HTML and put it on page (in the DOM)
-require('dotvenv').config();
-var React = require('react');
-var ReactDOM = require('react-dom');
+const API_KEY = 'AIzaSyDRL-sA5hfI9nFIcIZ-d1Rdj3PjMcIJIks';
 
-const API_KEY = API_KEY_YOUTUBE;
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-const App = function() {
-  return <div> HI! </div>
+    this.state = { videos: [] };
+
+    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
+      this.setState({ videos });
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <SearchBar />
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(<App />, document.querySelector('.container'));
